@@ -1,3 +1,4 @@
+require("dotenv").config();
 const Joi = require("joi");
 Joi.objectId = require("joi-objectid")(Joi);
 const mongoose = require("mongoose");
@@ -9,6 +10,11 @@ const rentals = require("./routes/rentals");
 const users = require("./routes/users");
 const auth = require("./routes/auth");
 const app = express();
+
+if (!process.env.JWT_PRIVATE_KEY) {
+  console.log("FATAL ERROR: JWT_PRIVATE_KEY is not set");
+  process.exit(1);
+}
 
 mongoose
   .connect("mongodb://localhost:27017/movieRental")
